@@ -1,0 +1,93 @@
+.btn-talentx {
+  background: linear-gradient(to right, #7f5af0, #2cb67d); /* tom cósmico */
+  border: none;
+  padding: 12px 28px;
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-top: 1rem;
+  animation: pulse 1.8s infinite;
+  box-shadow: 0 0 12px rgba(127, 90, 240, 0.6);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(127, 90, 240, 0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 14px rgba(127, 90, 240, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(127, 90, 240, 0.6); }
+}
+
+.btn-start-missao {
+  background: linear-gradient(90deg, #9333ea, #3b82f6);
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.7);
+  animation: pulsar 1.5s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+@keyframes pulsar {
+  0% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(59, 130, 246, 0.8);
+    transform: scale(1.04);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    transform: scale(1);
+  }
+}
+
+.fase-item .fase-icon {
+  width: 50px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.trilha-line {
+  flex: 0 0 40px;
+  height: 4px;
+  background: linear-gradient(90deg, #38bdf8, #9333ea);
+  border-radius: 2px;
+}
+
+.btn-start {
+  background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+  padding: 14px 28px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);}
+  50% { transform: scale(1.04); box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);}
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);}
+}
+/* Espaçamento entre o título TalentX e a trilha da jornada */
+.titulo-gradient {
+  margin-bottom: 2rem;
+}
+
+/* Opcional: centralizar melhor cards da jornada em telas grandes */
+@media (min-width: 992px) {
+  .row-cols-md-4 > .col {
+    max-width: 220px;
+    flex: 0 0 220px;
+  }
+}
