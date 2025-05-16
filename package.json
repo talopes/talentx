@@ -18,5 +18,8 @@
     "express-session": "^1.18.1",
     "mongoose": "^8.14.3",
     "puppeteer": "^24.8.2"
+  },
+  "puppeteer": {
+    "skip_chromium_download": true
   }
 }

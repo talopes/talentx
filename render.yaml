@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: talentx
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    buildFilter:
+      paths: ["."]
+    runtime:
+      dockerImage: node:18-bullseye

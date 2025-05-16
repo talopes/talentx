@@ -108,10 +108,14 @@ app.get('/download-pdf', async (req, res) => {
     }
 
     try {
-      const browser = await puppeteer.launch({
-        headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+    const browser = await puppeteer.launch({
+   headless: true,
+  executablePath: process.env.NODE_ENV === 'production'
+    ? '/usr/bin/google-chrome'
+    : undefined,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+
 
       const page = await browser.newPage();
       await page.setContent(html, { waitUntil: 'networkidle0' });
