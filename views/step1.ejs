@@ -41,7 +41,7 @@
     <h2 class="text-info mb-2">🕹️ Fase 1 de 4: Crie seu avatar</h2>
     <p class="mb-4 text-light-emphasis">Vamos começar com o básico. Quem é você na fila do trampo?</p>
 
-    <form action="/step1" method="POST">
+   <form action="/step1" method="POST" class="needs-validation" novalidate>
 
        <div class="mb-3">
         <label for="vaga" class="form-label">Tipo de vaga que você busca</label>
@@ -52,16 +52,25 @@
           <option value="CLT">CLT</option>
           <option value="Curso">Curso</option>
         </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="nome" class="form-label">Nome completo</label>
         <input type="text" class="form-control" id="nome" name="nome" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="nascimento" class="form-label">Data de nascimento</label>
         <input type="date" class="form-control" id="nascimento" name="nascimento" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
 <div class="mb-3">
@@ -76,6 +85,9 @@
     <option value="Prefiro não dizer">Prefiro não dizer</option>
     <option value="Outro">Outro</option>
   </select>
+   <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
 </div>
 
      
@@ -91,22 +103,34 @@
           <option value="Indígena">Indígena</option>
           <option value="Prefiro não dizer">Prefiro não dizer</option>
         </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="telefone" class="form-label">Telefone com WhatsApp</label>
         <input type="tel" class="form-control" id="telefone" name="telefone" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="email" class="form-label">E-mail</label>
         <input type="email" class="form-control" id="email" name="email">
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="cep" class="form-label">CEP</label>
         <input type="text" class="form-control" id="cep" name="cep" required>
-        <small class="form-text text-info mt-1">Não sabe? Pergunta pra sua mãe! 😉 O resto a gente preenche pra você.</small>
+        <small class="form-text text-info mt-1">Descobre o CEP! O resto a gente preenche pra você.</small>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
 
@@ -159,6 +183,20 @@
           });
       }
     });
+
+    (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
   </script>
 
 </body>

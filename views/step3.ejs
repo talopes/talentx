@@ -45,7 +45,9 @@
     <h2 class="text-warning mb-3">💼 Fase 3 de 4 — Suas Primeiras Conquistas</h2>
     <p class="mb-4 text-light-emphasis">Mesmo sem carteira assinada, você já viveu experiências que contam!</p>
 
-    <form action="/step3" method="POST">
+    <form action="/step3" method="POST" class="needs-validation" novalidate>
+
+
 
       <label class="form-label mb-2">Marque tudo o que já fez ou participou:</label>
 
@@ -100,6 +102,22 @@
     📖 Ver nossa missão
   </a>
 </div>
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
 
 </body>
 </html>

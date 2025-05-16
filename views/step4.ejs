@@ -45,7 +45,7 @@
     <h2 class="text-success mb-3">🚀 Fase Final — Seu Futuro</h2>
     <p class="mb-4 text-light-emphasis">Escolha um objetivo profissional e mostre seus talentos!</p>
 
-    <form action="/step4" method="POST">
+    <form action="/step4" method="POST" class="needs-validation" novalidate>
 
       <!-- Objetivo Profissional -->
       <div class="mb-4">
@@ -59,6 +59,9 @@
           <option value="Contribuir com minhas ideias e energia">Contribuir com minhas ideias e energia</option>
           <option value="Outro">Outro</option>
         </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
       </div>
 
       <!-- Hard Skills -->
@@ -125,6 +128,22 @@
     📖 Ver nossa missão
   </a>
 </div>
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
 
 </body>
 </html>

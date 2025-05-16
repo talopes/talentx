@@ -41,7 +41,8 @@
     <h2 class="text-info mb-2">📚 Fase 2 de 4: Missão Atual</h2>
     <p class="mb-4 text-light-emphasis">Queremos saber mais sobre sua escola e aprendizado até agora.</p>
 
-    <form action="/step2" method="POST">
+    <form action="/step2" method="POST" class="needs-validation" novalidate>
+
 
       <div class="mb-3">
         <label for="estudando" class="form-label">Você está estudando atualmente?</label>
@@ -153,6 +154,22 @@
     📖 Ver nossa missão
   </a>
 </div>
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
 
 </body>
 </html>
