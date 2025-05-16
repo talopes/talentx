@@ -5,7 +5,6 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const Jovem = require('./models/jovem');
-const puppeteer = require('puppeteer');
 
 const app = express();
 
