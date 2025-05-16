@@ -4,7 +4,6 @@ const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
-const pdf = require('html-pdf');
 const Jovem = require('./models/jovem');
 
 const app = express();
@@ -98,30 +97,38 @@ app.get('/download-pdf', async (req, res) => {
   const filePath = path.join(__dirname, 'views', 'resumo.ejs');
   const data = req.session.formData;
 
-  try {
-    const html = await ejs.renderFile(filePath, { fullData: data });
+  ejs.renderFile(filePath, { fullData: data }, async (err, html) => {
+    if (err) {
+      console.error('Erro ao renderizar EJS:', err);
+      return res.status(500).send('Erro ao gerar PDF');
+    }
 
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+    try {
+      const browser = await puppeteer.launch({
+        headless: 'new',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
+      const page = await browser.newPage();
+      await page.setContent(html, { waitUntil: 'networkidle0' });
 
-    const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+      const pdfBuffer = await page.pdf({ format: 'A4' });
 
-    const pdfBuffer = await page.pdf({ format: 'A4' });
+      await browser.close();
 
-    await browser.close();
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename=curriculo-talentx.pdf',
+        'Content-Length': pdfBuffer.length
+      });
 
-    res.setHeader('Content-Disposition', 'attachment; filename=curriculo-talentx.pdf');
-    res.setHeader('Content-Type', 'application/pdf');
-    res.send(pdfBuffer);
-  } catch (err) {
-    console.error('Erro ao gerar PDF com Puppeteer:', err);
-    res.status(500).send('Erro ao gerar PDF');
-  }
+     res.status(500).send(`
+        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
+         🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
+        </h2>
+`);
+
+  });
 });
-
 
 
 
