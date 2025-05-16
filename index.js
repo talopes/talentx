@@ -5,6 +5,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const Jovem = require('./models/jovem');
+const puppeteer = require('puppeteer');
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.use(session({
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Rotas
+// Rotas principais
 app.get('/intro', (req, res) => res.render('intro'));
 app.get('/', (req, res) => res.redirect('/intro'));
 
@@ -64,24 +65,25 @@ app.get('/step4', (req, res) => res.render('step4'));
 app.post('/step4', async (req, res) => {
   const habilidades = [].concat(req.body.habilidades || []);
   const objetivo = Array.isArray(req.body.objetivo) ? req.body.objetivo[0] : req.body.objetivo;
+
   req.session.formData = {
-  ...req.session.formData,
-  ...req.body,
-  objetivo,
-  habilidades
-};
-  console.log("Dados que serão salvos no MongoDB:", req.session.formData); // <--- AQUI
+    ...req.session.formData,
+    ...req.body,
+    objetivo,
+    habilidades
+  };
+
+  console.log("Dados que serão salvos no MongoDB:", req.session.formData);
 
   try {
     await Jovem.create(req.session.formData);
-    console.log("Dados que serão salvos no banco:", req.session.formData);
+    console.log("Dados que foram salvos no banco:", req.session.formData);
     res.redirect('/resumo');
   } catch (err) {
-    console.error('Erro ao salvar jovem:', err); // <-- VER O QUE DIZ AQUI
+    console.error('Erro ao salvar jovem:', err);
     res.status(500).send(`Erro ao salvar dados: ${err.message}`);
   }
 });
-
 
 app.get('/resumo', (req, res) => {
   res.render('resumo', { fullData: req.session.formData });
@@ -91,8 +93,6 @@ app.get('/missao', (req, res) => {
   res.render('missao');
 });
 
-const puppeteer = require('puppeteer');
-
 app.get('/download-pdf', async (req, res) => {
   const filePath = path.join(__dirname, 'views', 'resumo.ejs');
   const data = req.session.formData;
@@ -100,7 +100,11 @@ app.get('/download-pdf', async (req, res) => {
   ejs.renderFile(filePath, { fullData: data }, async (err, html) => {
     if (err) {
       console.error('Erro ao renderizar EJS:', err);
-      return res.status(500).send('Erro ao gerar PDF');
+      return res.status(500).send(`
+        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
+          🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
+        </h2>
+      `);
     }
 
     try {
@@ -108,11 +112,11 @@ app.get('/download-pdf', async (req, res) => {
         headless: 'new',
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
+
       const page = await browser.newPage();
       await page.setContent(html, { waitUntil: 'networkidle0' });
 
       const pdfBuffer = await page.pdf({ format: 'A4' });
-
       await browser.close();
 
       res.set({
@@ -121,16 +125,18 @@ app.get('/download-pdf', async (req, res) => {
         'Content-Length': pdfBuffer.length
       });
 
-     res.status(500).send(`
-        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
-         🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
-        </h2>
-`);
+      res.send(pdfBuffer);
 
+    } catch (error) {
+      console.error('Erro ao gerar PDF com Puppeteer:', error);
+      res.status(500).send(`
+        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
+          🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
+        </h2>
+      `);
+    }
   });
 });
-
-
 
 // Start
 const PORT = 3000;
