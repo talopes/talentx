@@ -93,6 +93,9 @@ app.get('/missao', (req, res) => {
   res.render('missao');
 });
 
+const chromium = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
+
 app.get('/download-pdf', async (req, res) => {
   const filePath = path.join(__dirname, 'views', 'resumo.ejs');
   const data = req.session.formData;
@@ -100,27 +103,22 @@ app.get('/download-pdf', async (req, res) => {
   ejs.renderFile(filePath, { fullData: data }, async (err, html) => {
     if (err) {
       console.error('Erro ao renderizar EJS:', err);
-      return res.status(500).send(`
-        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
-          🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
-        </h2>
-      `);
+      return res.status(500).send('Erro ao gerar PDF');
     }
 
     try {
-    const browser = await puppeteer.launch({
-   headless: true,
-  executablePath: process.env.NODE_ENV === 'production'
-    ? '/usr/bin/google-chrome'
-    : undefined,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-});
-
+      const browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
+      });
 
       const page = await browser.newPage();
       await page.setContent(html, { waitUntil: 'networkidle0' });
 
       const pdfBuffer = await page.pdf({ format: 'A4' });
+
       await browser.close();
 
       res.set({
@@ -130,17 +128,13 @@ app.get('/download-pdf', async (req, res) => {
       });
 
       res.send(pdfBuffer);
-
     } catch (error) {
-      console.error('Erro ao gerar PDF com Puppeteer:', error);
-      res.status(500).send(`
-        <h2 style="text-align:center; font-family:sans-serif; color:#e11d48;">
-          🚫 Erro ao gerar PDF<br> Tente novamente mais tarde.
-        </h2>
-      `);
+      console.error('Erro ao gerar PDF com puppeteer-core:', error);
+      res.status(500).send('Erro ao gerar PDF');
     }
   });
 });
+
 
 // Start
 const PORT = 3000;
