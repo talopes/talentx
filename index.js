@@ -92,21 +92,36 @@ app.get('/missao', (req, res) => {
   res.render('missao');
 });
 
-app.get('/download-pdf', (req, res) => {
+const puppeteer = require('puppeteer');
+
+app.get('/download-pdf', async (req, res) => {
   const filePath = path.join(__dirname, 'views', 'resumo.ejs');
   const data = req.session.formData;
 
-  ejs.renderFile(filePath, { fullData: data }, (err, html) => {
-    if (err) return res.status(500).send('Erro ao gerar o PDF');
+  try {
+    const html = await ejs.renderFile(filePath, { fullData: data });
 
-    pdf.create(html).toBuffer((err, buffer) => {
-      if (err) return res.status(500).send('Erro ao criar o PDF');
-      res.setHeader('Content-Disposition', 'attachment; filename=curriculo-talentx.pdf');
-      res.setHeader('Content-Type', 'application/pdf');
-      res.send(buffer);
+    const browser = await puppeteer.launch({
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
-  });
+
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+
+    const pdfBuffer = await page.pdf({ format: 'A4' });
+
+    await browser.close();
+
+    res.setHeader('Content-Disposition', 'attachment; filename=curriculo-talentx.pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error('Erro ao gerar PDF com Puppeteer:', err);
+    res.status(500).send('Erro ao gerar PDF');
+  }
 });
+
 
 
 
