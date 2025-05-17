@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Currículo Pronto – TalentX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+
+  <style>
+    body {
+      background: #f8fafc;
+      color: #1f2937;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px 20px 100px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      color: #0f172a;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-top: 1.5rem;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+    }
+    p {
+      margin: 0.25rem 0;
+    }
+    .label {
+      font-weight: bold;
+    }
+    .badge-tx {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      background: linear-gradient(90deg, #3b82f6, #9333ea);
+      color: #fff;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+    }
+  @media print {
+  h2::before {
+    content: none !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="print-only text-center mb-4">
+  <h1 style="font-size: 1.8rem; color: #1f2937;">Currículo</h1>
+</div>
+
+ <!-- CONTEÚDO QUE SÓ APARECE NA WEB -->
+<div class="no-print">
+
+  <h1>🎉 Currículo Pronto!</h1>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Botões de ação -->
+  <div class="container text-center mb-4 mt-3 d-flex flex-wrap justify-content-center gap-3">
+    <a href="/download-pdf" class="btn btn-primary d-flex align-items-center gap-2">
+      <i class="fas fa-file-download"></i> Baixar PDF
+    </a>
+    <!--
+    <a href="https://wa.me/?text=Acabei de criar meu currículo pelo TalentX! Dá uma olhada: https://talentx.com.br/cv" target="_blank" class="btn btn-success d-flex align-items-center gap-2">
+      <i class="fab fa-whatsapp"></i> Compartilhar no WhatsApp
+    </a>-->
+  </div>
+</div>
+
+  <!-- Identidade -->
+  <h2>👤 Identidade</h2>
+  <p><span class="label">Nome:</span> <%= fullData.nome %></p>
+  <p><span class="label">Data de nascimento:</span> <%= fullData.nascimento %></p>
+  <p><span class="label">Localidade:</span> <%= fullData.cidade %> - <%= fullData.bairro %></p>
+  <p><span class="label">WhatsApp:</span> <%= fullData.whatsapp %></p>
+  <p><span class="label">E-mail:</span> <%= fullData.email %></p>
+  <p><span class="label">Raça/Cor:</span> <%= fullData.raca %></p>
+
+  <!-- Escolaridade -->
+  <h2>🎓 Escolaridade e Cursos</h2>
+  <p><span class="label">Estuda atualmente:</span> <%= fullData.estudando %></p>
+  <p><span class="label">Escola:</span> <%= fullData.escola %></p>
+  <p><span class="label">Série:</span> <%= fullData.serie %></p>
+  <p><span class="label">Turno:</span> <%= fullData.turno %></p>
+  <p><span class="label">Cursos realizados:</span> <%= fullData.cursos %></p>
+
+  <!-- Objetivo -->
+  <h2>🎯 Objetivo Profissional</h2>
+  <p><%= fullData.objetivo %></p>
+
+  <!-- Experiência -->
+  <h2>🛠️ Experiências</h2>
+  <% if (Array.isArray(fullData.experiencias)) { %>
+    <ul>
+      <% fullData.experiencias.forEach(function(exp) { %>
+        <li><%= exp %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p><%= fullData.experiencias %></p>
+  <% } %>
+
+  <!-- Habilidades -->
+  <h2>🧠 Habilidades</h2>
+  <% if (Array.isArray(fullData.habilidades)) { %>
+    <ul>
+      <% fullData.habilidades.forEach(function(skill) { %>
+        <li><%= skill %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p><%= fullData.habilidades %></p>
+  <% } %>
+
+  <div class="text-center">
+    <span class="badge-tx">Criado com TalentX 🚀</span>
+  </div>
+
+<div class="no-print">
+  <div class="text-center mt-4">
+    <a href="/intro" class="btn btn-secondary" style="background-color: #334155; color: #fff; border-radius: 10px; padding: 10px 24px; font-weight: 600;">
+      🔁 Voltar ao Início
+    </a>
+  </div>
+
+  <div class="text-center mt-2">
+    <a href="/missao" class="text-primary" style="text-decoration: none;">
+      📖 Ver nossa missão
+    </a>
+  </div>
+</div>
+
+
+</body>
+</html>

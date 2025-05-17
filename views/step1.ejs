@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>TalentX – Fase 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .progress-bar-tx {
+      background: linear-gradient(90deg, #3b82f6, #7c3aed);
+    }
+    .form-control, .form-select {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      border-radius: 10px;
+      padding: 0.7rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 0.15rem rgba(124, 58, 237, 0.25);
+      background-color: #1e293b;
+      color: #fff;
+    }
+    label {
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-dark text-light" style="font-family: 'Poppins', sans-serif;">
+
+  <div class="container py-4" style="max-width: 600px;">
+
+    <!-- Barra de Progresso -->
+    <div class="progress mb-4" style="height: 10px; border-radius: 8px;">
+      <div class="progress-bar progress-bar-tx" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <h2 class="text-info mb-2">🕹️ Fase 1 de 4: Crie seu avatar</h2>
+    <p class="mb-4 text-light-emphasis">Vamos começar com o básico. Quem é você na fila do trampo?</p>
+
+   <form action="/step1" method="POST" class="needs-validation" novalidate>
+
+       <div class="mb-3">
+        <label for="vaga" class="form-label">Tipo de vaga que você busca</label>
+        <select class="form-select" id="vaga" name="vaga" required>
+          <option value="">Selecione uma opção</option>
+          <option value="Estágio">Estágio</option>
+          <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+          <option value="CLT">CLT</option>
+          <option value="Curso">Curso</option>
+        </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome completo</label>
+        <input type="text" class="form-control" id="nome" name="nome" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="nascimento" class="form-label">Data de nascimento</label>
+        <input type="date" class="form-control" id="nascimento" name="nascimento" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+<div class="mb-3">
+  <label for="genero" class="form-label">Como você se identifica?</label>
+  <select class="form-select" id="genero" name="genero" required>
+    <option value="">Selecione</option>
+    <option value="Mulher cisgênero">Mulher cisgênero</option>
+    <option value="Homem cisgênero">Homem cisgênero</option>
+    <option value="Mulher transgênero">Mulher transgênero</option>
+    <option value="Homem transgênero">Homem transgênero</option>
+    <option value="Pessoa não binária">Pessoa não binária</option>
+    <option value="Prefiro não dizer">Prefiro não dizer</option>
+    <option value="Outro">Outro</option>
+  </select>
+   <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+</div>
+
+     
+      
+      <div class="mb-3">
+        <label for="raca" class="form-label">Como você se identifica em relação à sua raça/cor?</label>
+        <select class="form-select" id="raca" name="raca" required>
+          <option value="">Selecione uma opção</option>
+          <option value="Preta">Preta</option>
+          <option value="Parda">Parda</option>
+          <option value="Branca">Branca</option>
+          <option value="Amarela">Amarela</option>
+          <option value="Indígena">Indígena</option>
+          <option value="Prefiro não dizer">Prefiro não dizer</option>
+        </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="telefone" class="form-label">Telefone com WhatsApp</label>
+        <input type="tel" class="form-control" id="telefone" name="telefone" required>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email">
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cep" class="form-label">CEP</label>
+        <input type="text" class="form-control" id="cep" name="cep" required>
+        <small class="form-text text-info mt-1">Descobre o CEP! O resto a gente preenche pra você.</small>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label for="bairro" class="form-label">Bairro</label>
+        <input type="text" class="form-control" id="bairro" name="bairro" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="cidade" name="cidade" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <input type="text" class="form-control" id="estado" name="estado" readonly>
+      </div>
+
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-start-missao">Próxima Fase</button>
+      </div>
+
+    </form>
+
+    <div class="text-center mt-4">
+  <a href="/intro" class="btn btn-secondary" style="background-color: #334155; color: #fff; border-radius: 10px; padding: 10px 24px; font-weight: 600;">
+    🔁 Voltar ao Início
+  </a>
+</div>
+  </div>
+<div class="text-center mt-4">
+  <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
+    📖 Ver nossa missão
+  </a>
+</div>
+
+  <script>
+    document.getElementById("cep").addEventListener("blur", function () {
+      const cep = this.value.replace(/\\D/g, "");
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(response => response.json())
+          .then(data => {
+            if (!data.erro) {
+              document.getElementById("bairro").value = data.bairro || "";
+              document.getElementById("cidade").value = data.localidade || "";
+              document.getElementById("estado").value = data.uf || "";
+            }
+          });
+      }
+    });
+
+    (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+  </script>
+
+</body>
+</html>

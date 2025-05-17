@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TalentX – Fase Final</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: 'Poppins', sans-serif;
+      padding: 2rem;
+    }
+    .form-select, .form-check-input {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      border-radius: 8px;
+    }
+    .form-check-label {
+      margin-left: 0.5rem;
+    }
+    .btn-final {
+      background: linear-gradient(90deg, #10b981, #14b8a6);
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 12px 30px;
+      border-radius: 12px;
+      margin-top: 20px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);}
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);}
+      100% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" style="max-width: 640px;">
+    <h2 class="text-success mb-3">🚀 Fase Final — Seu Futuro</h2>
+    <p class="mb-4 text-light-emphasis">Escolha um objetivo profissional e mostre seus talentos!</p>
+
+    <form action="/step4" method="POST" class="needs-validation" novalidate>
+
+      <!-- Objetivo Profissional -->
+      <div class="mb-4">
+        <label for="objetivo" class="form-label">Objetivo profissional</label>
+        <select class="form-select" id="objetivo" name="objetivo" required>
+          <option value="">Selecione</option>
+          <option value="Conquistar uma vaga como Jovem Aprendiz">Conquistar uma vaga como Jovem Aprendiz</option>
+          <option value="Iniciar um estágio na área administrativa">Iniciar um estágio na área administrativa</option>
+          <option value="Trabalhar com atendimento ao público">Trabalhar com atendimento ao público</option>
+          <option value="Aprender e crescer em uma empresa">Aprender e crescer em uma empresa</option>
+          <option value="Contribuir com minhas ideias e energia">Contribuir com minhas ideias e energia</option>
+          <option value="Outro">Outro</option>
+        </select>
+         <div class="invalid-feedback">
+          Ops, faltou alguma coisa! 
+        </div>
+      </div>
+
+      <!-- Hard Skills -->
+      <div class="mb-4">
+        <label class="form-label">Hard Skills (habilidades técnicas)</label>
+
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Informática básica" id="hs1">
+          <label class="form-check-label" for="hs1">Informática básica</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Pacote Office" id="hs2">
+          <label class="form-check-label" for="hs2">Pacote Office</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Excel básico" id="hs3">
+          <label class="form-check-label" for="hs3">Excel básico</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Canva" id="hs4">
+          <label class="form-check-label" for="hs4">Canva</label>
+        </div>
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="mb-4">
+        <label class="form-label">Soft Skills (habilidades pessoais)</label>
+
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Boa comunicação" id="ss1">
+          <label class="form-check-label" for="ss1">Boa comunicação</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Trabalho em equipe" id="ss2">
+          <label class="form-check-label" for="ss2">Trabalho em equipe</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Organização" id="ss3">
+          <label class="form-check-label" for="ss3">Organização</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Criatividade" id="ss4">
+          <label class="form-check-label" for="ss4">Criatividade</label>
+        </div>
+        <div class="form-check mb-1">
+          <input class="form-check-input" type="checkbox" name="habilidades" value="Responsabilidade" id="ss5">
+          <label class="form-check-label" for="ss5">Responsabilidade</label>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-final">Finalizar Missão</button>
+      </div>
+
+    </form>
+  </div>
+<div class="text-center mt-4">
+  <a href="/intro" class="btn btn-secondary" style="background-color: #334155; color: #fff; border-radius: 10px; padding: 10px 24px; font-weight: 600;">
+    🔁 Voltar ao Início
+  </a>
+</div>
+<div class="text-center mt-4">
+  <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
+    📖 Ver nossa missão
+  </a>
+</div>
+<script>
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
+
+</body>
+</html>
