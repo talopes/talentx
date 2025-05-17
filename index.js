@@ -8,10 +8,14 @@ const Jovem = require('./models/jovem');
 
 const app = express();
 
-// Conexão com MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('🟢 MongoDB conectado'))
-  .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
+mongoose.connect(process.env.MONGODB_URI, {
+  serverSelectionTimeoutMS: 20000,
+  socketTimeoutMS: 45000,
+})
+.then(() => console.log('🟢 MongoDB conectado'))
+.catch(err => console.error('❌ Erro ao conectar ao MongoDB:', err));
+
+
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
