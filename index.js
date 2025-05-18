@@ -101,30 +101,35 @@ const html_to_pdf = require('html-pdf-node');
 app.get('/download-pdf', async (req, res) => {
   const data = req.session.formData;
 
-  ejs.renderFile(path.join(__dirname, 'views', 'resumo.ejs'), { fullData: data }, async (err, html) => {
-    if (err) {
-      console.error('Erro ao renderizar EJS:', err);
-      return res.status(500).send('Erro ao gerar o PDF');
+  ejs.renderFile(
+    path.join(__dirname, 'views', 'resumo.ejs'),
+    { fullData: data, isPdf: true },  // <-- adiciona a flag
+    async (err, html) => {
+      if (err) {
+        console.error('Erro ao renderizar EJS:', err);
+        return res.status(500).send('Erro ao gerar o PDF');
+      }
+
+      const file = { content: html };
+
+      try {
+        const pdfBuffer = await html_to_pdf.generatePdf(file, { format: 'A4' });
+
+        res.set({
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': 'attachment; filename=curriculo-talentx.pdf',
+          'Content-Length': pdfBuffer.length,
+        });
+
+        res.send(pdfBuffer);
+      } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
+        res.status(500).send('Erro ao gerar PDF');
+      }
     }
-
-    const file = { content: html };
-
-    try {
-      const pdfBuffer = await html_to_pdf.generatePdf(file, { format: 'A4' });
-
-      res.set({
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=curriculo-talentx.pdf',
-        'Content-Length': pdfBuffer.length,
-      });
-
-      res.send(pdfBuffer);
-    } catch (error) {
-      console.error('Erro ao gerar PDF:', error);
-      res.status(500).send('Erro ao gerar PDF');
-    }
-  });
+  );
 });
+
 
 
 

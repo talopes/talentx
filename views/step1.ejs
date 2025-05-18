@@ -125,13 +125,17 @@
       </div>
 
       <div class="mb-3">
-        <label for="cep" class="form-label">CEP</label>
-        <input type="text" class="form-control" id="cep" name="cep" required>
-        <small class="form-text text-info mt-1">Descobre o CEP! O resto a gente preenche pra você.</small>
-         <div class="invalid-feedback">
-          Ops, faltou alguma coisa! 
-        </div>
-      </div>
+  <label for="cep" class="form-label">CEP</label>
+  <div class="input-group">
+    <input type="text" class="form-control" id="cep" name="cep" required>
+    <button type="button" class="btn btn-outline-light" id="buscar-cep">
+      🔍
+    </button>
+  </div>
+  <small class="form-text text-info mt-1">Digite o CEP e clique na lupa para preencher bairro, cidade e estado automaticamente.</small>
+  <div class="invalid-feedback">Ops, faltou alguma coisa!</div>
+</div>
+
 
 
       <div class="mb-3">
@@ -168,36 +172,68 @@
   </a>
 </div>
 
-  <script>
-    document.getElementById("cep").addEventListener("blur", function () {
-      const cep = this.value.replace(/\\D/g, "");
-      if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(response => response.json())
-          .then(data => {
-            if (!data.erro) {
-              document.getElementById("bairro").value = data.bairro || "";
-              document.getElementById("cidade").value = data.localidade || "";
-              document.getElementById("estado").value = data.uf || "";
-            }
-          });
-      }
-    });
+ <script>
+  const cepInput = document.getElementById("cep");
+  const bairroInput = document.getElementById("bairro");
+  const cidadeInput = document.getElementById("cidade");
+  const estadoInput = document.getElementById("estado");
+  const buscarBtn = document.getElementById("buscar-cep");
 
-    (() => {
-    'use strict'
-    const forms = document.querySelectorAll('.needs-validation')
+  function buscarEndereco(cep) {
+    const cleanCep = cep.replace(/\D/g, "");
+    if (cleanCep.length === 8) {
+      return fetch(`https://viacep.com.br/ws/${cleanCep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.erro) {
+            bairroInput.value = data.bairro || "";
+            cidadeInput.value = data.localidade || "";
+            estadoInput.value = data.uf || "";
+          } else {
+            alert("CEP inválido.");
+          }
+        });
+    } else {
+      alert("Você precisa preencher os dados antes de avançar na missão!");
+    }
+  }
+
+  // Botão lupa
+  buscarBtn.addEventListener("click", () => {
+    buscarEndereco(cepInput.value);
+  });
+
+  // Bloquear Enter de enviar o formulário automaticamente
+  document.querySelector("form").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  });
+
+  // Validação completa ao enviar
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
     Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+      form.addEventListener('submit', async event => {
+        await buscarEndereco(cepInput.value);
+
+        if (!form.checkValidity() ||
+            bairroInput.value === "" ||
+            cidadeInput.value === "" ||
+            estadoInput.value === "") {
+          event.preventDefault();
+          event.stopPropagation();
+          alert("Preencha todos os campos obrigatórios e clique na lupa para buscar o endereço.");
         }
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-  </script>
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
+
+
 
 </body>
 </html>
