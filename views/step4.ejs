@@ -33,9 +33,9 @@
       animation: pulse 1.5s infinite;
     }
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);}
-      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);}
-      100% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4);}
+      0% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
+      100% { transform: scale(1); box-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
     }
   </style>
 </head>
@@ -59,29 +59,26 @@
           <option value="Contribuir com minhas ideias e energia">Contribuir com minhas ideias e energia</option>
           <option value="Outro">Outro</option>
         </select>
-         <div class="invalid-feedback">
-          Ops, faltou alguma coisa! 
-        </div>
+        <div class="invalid-feedback">Ops, faltou alguma coisa!</div>
       </div>
 
       <!-- Hard Skills -->
       <div class="mb-4">
         <label class="form-label">Hard Skills (habilidades técnicas)</label>
-
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Informática básica" id="hs1">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Informática básica" id="hs1">
           <label class="form-check-label" for="hs1">Informática básica</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Pacote Office" id="hs2">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Pacote Office" id="hs2">
           <label class="form-check-label" for="hs2">Pacote Office</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Excel básico" id="hs3">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Excel básico" id="hs3">
           <label class="form-check-label" for="hs3">Excel básico</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Canva" id="hs4">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Canva" id="hs4">
           <label class="form-check-label" for="hs4">Canva</label>
         </div>
       </div>
@@ -89,25 +86,24 @@
       <!-- Soft Skills -->
       <div class="mb-4">
         <label class="form-label">Soft Skills (habilidades pessoais)</label>
-
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Boa comunicação" id="ss1">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Boa comunicação" id="ss1">
           <label class="form-check-label" for="ss1">Boa comunicação</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Trabalho em equipe" id="ss2">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Trabalho em equipe" id="ss2">
           <label class="form-check-label" for="ss2">Trabalho em equipe</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Organização" id="ss3">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Organização" id="ss3">
           <label class="form-check-label" for="ss3">Organização</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Criatividade" id="ss4">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Criatividade" id="ss4">
           <label class="form-check-label" for="ss4">Criatividade</label>
         </div>
         <div class="form-check mb-1">
-          <input class="form-check-input" type="checkbox" name="habilidades" value="Responsabilidade" id="ss5">
+          <input class="form-check-input" type="checkbox" name="habilidades[]" value="Responsabilidade" id="ss5">
           <label class="form-check-label" for="ss5">Responsabilidade</label>
         </div>
       </div>
@@ -115,35 +111,41 @@
       <div class="text-center">
         <button type="submit" class="btn btn-final">Finalizar Missão</button>
       </div>
-
     </form>
   </div>
-<div class="text-center mt-4">
-  <a href="/intro" class="btn btn-secondary" style="background-color: #334155; color: #fff; border-radius: 10px; padding: 10px 24px; font-weight: 600;">
-    🔁 Voltar ao Início
-  </a>
-</div>
-<div class="text-center mt-4">
-  <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
-    📖 Ver nossa missão
-  </a>
-</div>
-<script>
-  (() => {
-    'use strict'
-    const forms = document.querySelectorAll('.needs-validation')
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-</script>
 
+  <div class="text-center mt-4">
+    <a href="/intro" class="btn btn-secondary" style="background-color: #334155; color: #fff; border-radius: 10px; padding: 10px 24px; font-weight: 600;">
+      🔁 Voltar ao Início
+    </a>
+  </div>
+  <div class="text-center mt-4">
+    <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
+      📖 Ver nossa missão
+    </a>
+  </div>
+
+  <script>
+    // Previne ENTER de enviar o formulário automaticamente
+    document.querySelector("form").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") e.preventDefault();
+    });
+
+    // Validação Bootstrap
+    (() => {
+      'use strict';
+      const forms = document.querySelectorAll('.needs-validation');
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    })();
+  </script>
 
 </body>
 </html>

@@ -4,29 +4,20 @@ const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const html_to_pdf = require('html-pdf-node');
 const Jovem = require('./models/jovem');
 
 const app = express();
-
-mongoose.connect(process.env.MONGODB_URI, {
-  serverSelectionTimeoutMS: 20000,
-  socketTimeoutMS: 45000,
-})
-.then(() => console.log('🟢 MongoDB conectado'))
-.catch(err => console.error('❌ Erro ao conectar ao MongoDB:', err));
-
-
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(session({
-  secret: 'talentx_secret',
+  secret: process.env.SESSION_SECRET || 'talentx_secret',
   resave: false,
   saveUninitialized: true,
 }));
 
-// View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -76,65 +67,87 @@ app.post('/step4', async (req, res) => {
     habilidades
   };
 
-  console.log("Dados que serão salvos no MongoDB:", req.session.formData);
+  console.log("📝 Dados recebidos:", req.session.formData);
 
   try {
     await Jovem.create(req.session.formData);
-    console.log("Dados que foram salvos no banco:", req.session.formData);
+    console.log("✅ Dados salvos no MongoDB");
     res.redirect('/resumo');
   } catch (err) {
-    console.error('Erro ao salvar jovem:', err);
+    console.error('❌ Erro ao salvar no banco:', err);
     res.status(500).send(`Erro ao salvar dados: ${err.message}`);
   }
 });
 
 app.get('/resumo', (req, res) => {
-  res.render('resumo', { fullData: req.session.formData });
+  if (!req.session.formData) {
+    return res.redirect('/step1');
+  }
+  res.render('resumo', {
+  fullData: req.session.formData,
+  isPdf: false
+});
 });
 
-app.get('/missao', (req, res) => {
-  res.render('missao');
-});
-
-const html_to_pdf = require('html-pdf-node');
+app.get('/missao', (req, res) => res.render('missao'));
 
 app.get('/download-pdf', async (req, res) => {
   const data = req.session.formData;
 
-  ejs.renderFile(
-    path.join(__dirname, 'views', 'resumo.ejs'),
-    { fullData: data, isPdf: true },  // <-- adiciona a flag
-    async (err, html) => {
-      if (err) {
-        console.error('Erro ao renderizar EJS:', err);
-        return res.status(500).send('Erro ao gerar o PDF');
+  if (!data) {
+    return res.status(400).send("Nenhum dado disponível para gerar o PDF.");
+  }
+
+  try {
+    const html = await ejs.renderFile(
+  path.join(__dirname, 'views', 'resumo.ejs'),
+  {
+    fullData: data,
+    isPdf: true
+  }
+);
+
+
+    const file = { content: html };
+    const pdfBuffer = await html_to_pdf.generatePdf(file, {
+      format: 'A4',
+      puppeteerArgs: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
       }
+    });
 
-      const file = { content: html };
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename=curriculo-talentx.pdf',
+      'Content-Length': pdfBuffer.length,
+    });
 
-      try {
-        const pdfBuffer = await html_to_pdf.generatePdf(file, { format: 'A4' });
-
-        res.set({
-          'Content-Type': 'application/pdf',
-          'Content-Disposition': 'attachment; filename=curriculo-talentx.pdf',
-          'Content-Length': pdfBuffer.length,
-        });
-
-        res.send(pdfBuffer);
-      } catch (error) {
-        console.error('Erro ao gerar PDF:', error);
-        res.status(500).send('Erro ao gerar PDF');
-      }
-    }
-  );
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('❌ Erro ao gerar PDF:', error);
+    res.status(500).send('Erro ao gerar PDF');
+  }
 });
 
+// Função principal que conecta e inicia
+async function main() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 20000,
+      socketTimeoutMS: 45000,
+    });
 
+    console.log("🟢 MongoDB conectado");
 
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`🚀 TalentX rodando em http://localhost:${PORT}`);
+    });
 
-// Start
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 TalentX rodando em http://localhost:${PORT}`);
-});
+  } catch (err) {
+    console.error('❌ Falha ao conectar com o MongoDB:', err.message);
+    process.exit(1);
+  }
+}
+
+main();

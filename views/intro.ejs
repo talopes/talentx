@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>TalentX – Sua Missão Começa Aqui</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
-  <!-- Dentro do <head> -->
   <meta name="description" content="Crie seu currículo gratuito de forma fácil e gamificada com o TalentX. Plataforma para jovens sem experiência formal acessarem o mercado de trabalho.">
   <meta name="keywords" content="currículo jovem, primeiro emprego, jovem aprendiz, estágio, inclusão produtiva, trabalho jovem, plataforma currículo">
   <meta name="author" content="TalentX">
@@ -30,19 +29,12 @@
     }
 
     .btn-start {
-      background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+      background-color: #3b82f6;
       padding: 14px 28px;
       font-weight: 600;
       color: #fff;
       border-radius: 10px;
       text-decoration: none;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 8px rgba(59, 130, 246, 0.2); }
-      50% { transform: scale(1.04); box-shadow: 0 0 20px rgba(124, 58, 237, 0.6); }
-      100% { transform: scale(1); box-shadow: 0 0 8px rgba(59, 130, 246, 0.2); }
     }
 
     .card-grid {
@@ -58,7 +50,7 @@
       padding: 1rem 1.2rem;
       color: #f1f5f9;
       width: 250px;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
@@ -75,11 +67,7 @@
     .titulo-gradient {
       font-size: 1.8rem;
       font-weight: 800;
-      background: linear-gradient(90deg, #3b82f6, #9333ea);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+      color: #3b82f6;
     }
 
     @media (max-width: 768px) {
@@ -101,57 +89,54 @@
   </h1>
 
  <!-- Etapas da Jornada -->
-<div class="container my-4">
-  <h2 class="text-center text-info mb-4" style="font-size: 1.2rem;">🧭 Etapas da sua jornada:</h2>
+  <div class="container my-4">
+    <h2 class="text-center text-info mb-4" style="font-size: 1.2rem;">🧭 Etapas da sua jornada:</h2>
 
-  <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center text-center">
+    <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center text-center">
+      <div class="col">
+        <a href="/step1" class="text-decoration-none">
+          <div class="p-3 rounded-4 bg-primary text-white">
+            <div style="font-size: 2rem;">🧑‍🚀</div>
+            <h6 class="mt-2 mb-1 fw-bold">Fase 1</h6>
+            <p class="small mb-0">Crie seu avatar</p>
+          </div>
+        </a>
+      </div>
 
-    <div class="col">
-      <a href="/step1" class="text-decoration-none">
-        <div class="p-3 rounded-4 bg-primary text-white shadow-sm">
-          <div style="font-size: 2rem;">🧑‍🚀</div>
-          <h6 class="mt-2 mb-1 fw-bold">Fase 1</h6>
-          <p class="small mb-0">Crie seu avatar</p>
-        </div>
-      </a>
+      <div class="col">
+        <a href="/step1" class="text-decoration-none">
+          <div class="p-3 rounded-4 bg-success text-white">
+            <div style="font-size: 2rem;">🗺️</div>
+            <h6 class="mt-2 mb-1 fw-bold">Fase 2</h6>
+            <p class="small mb-0">Escolha seu caminho</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/step1" class="text-decoration-none">
+          <div class="p-3 rounded-4" style="background-color: #7c3aed; color: #fff;">
+            <div style="font-size: 2rem;">💡</div>
+            <h6 class="mt-2 mb-1 fw-bold">Fase 3</h6>
+            <p class="small mb-0">Mostre suas conquistas</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/step1" class="text-decoration-none">
+          <div class="p-3 rounded-4 bg-danger text-white">
+            <div style="font-size: 2rem;">🚀</div>
+            <h6 class="mt-2 mb-1 fw-bold">Fase Final</h6>
+            <p class="small mb-0">Compartilhe seu currículo</p>
+          </div>
+        </a>
+      </div>
     </div>
-
-    <div class="col">
-      <a href="/step1" class="text-decoration-none">
-        <div class="p-3 rounded-4 bg-success text-white shadow-sm">
-          <div style="font-size: 2rem;">🗺️</div>
-          <h6 class="mt-2 mb-1 fw-bold">Fase 2</h6>
-          <p class="small mb-0">Escolha seu caminho</p>
-        </div>
-      </a>
-    </div>
-
-    <div class="col">
-      <a href="/step1" class="text-decoration-none">
-        <div class="p-3 rounded-4" style="background-color: #7c3aed; color: #fff;">
-          <div style="font-size: 2rem;">💡</div>
-          <h6 class="mt-2 mb-1 fw-bold">Fase 3</h6>
-          <p class="small mb-0">Mostre suas conquistas</p>
-        </div>
-      </a>
-    </div>
-
-    <div class="col">
-      <a href="/step1" class="text-decoration-none">
-        <div class="p-3 rounded-4 bg-danger text-white shadow-sm">
-          <div style="font-size: 2rem;">🚀</div>
-          <h6 class="mt-2 mb-1 fw-bold">Fase Final</h6>
-          <p class="small mb-0">Compartilhe seu currículo</p>
-        </div>
-      </a>
-    </div>
-
   </div>
-</div>
 
-    <div class="text-center mt-4">
-      <a href="/step1" class="btn btn-start">Começar agora</a>
-    </div>
+  <div class="text-center mt-4">
+    <a href="/step1" class="btn btn-start">Começar agora</a>
   </div>
 
   <!-- Futuro -->
@@ -176,11 +161,12 @@
       <span class="badge-warning">em breve</span>
     </div>
   </div>
-<div class="text-center mt-4">
-  <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
-    📖 Ver nossa missão
-  </a>
-</div>
+
+  <div class="text-center mt-4">
+    <a href="/missao" class="btn btn-outline-light" style="border-radius: 10px; padding: 10px 24px; font-weight: 500;">
+      📖 Ver nossa missão
+    </a>
+  </div>
 
 </body>
 </html>
