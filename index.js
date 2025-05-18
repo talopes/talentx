@@ -129,6 +129,13 @@ app.get('/download-pdf', async (req, res) => {
   }
 });
 
+app.get('/gerando-pdf', (req, res) => {
+  if (!req.session.formData) {
+    return res.redirect('/step1');
+  }
+  res.render('gerando_pdf');
+});
+
 // Função principal que conecta e inicia
 async function main() {
   try {
